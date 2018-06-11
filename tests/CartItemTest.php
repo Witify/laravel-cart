@@ -76,12 +76,14 @@ class CartItemTest extends TestCase
             'id' => 12,
             'name' => 'cool name',
             'price' => 66.99,
-            'options' => []
+            'options' => [],
+            'quantity' => 2
         ]);
 
         $this->assertEquals($this->cartItem->id, 12);
         $this->assertEquals($this->cartItem->name, 'cool name');
         $this->assertEquals($this->cartItem->price, 66.99);
+        $this->assertEquals($this->cartItem->quantity, 2);
     }
 
     public function test_cannot_udpate_from_array_with_invalid_array()

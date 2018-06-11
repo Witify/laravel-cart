@@ -76,8 +76,8 @@ class CartItem implements Arrayable, Jsonable
      */
     static public function fromArray(array $data)
     {
-        if (array_key_exists('id', $data) && array_key_exists('name', $data) && array_key_exists('price', $data) && array_key_exists('options', $data)) {
-            return new self($data['id'], $data['name'], $data['price'], $data['options']);
+        if (array_key_exists('id', $data) && array_key_exists('name', $data) && array_key_exists('price', $data) && array_key_exists('options', $data) && array_key_exists('quantity', $data)) {
+            return (new self($data['id'], $data['name'], $data['price'], $data['options']))->setQuantity($data['quantity']);
         }
         throw new \InvalidArgumentException('Please supply a valid array');
     }
@@ -108,6 +108,7 @@ class CartItem implements Arrayable, Jsonable
         if(empty($quantity) || ! is_numeric($quantity))
             throw new \InvalidArgumentException('Please supply a valid quantity.');
         $this->quantity = $quantity;
+        return $this;
     }
 
     /**
