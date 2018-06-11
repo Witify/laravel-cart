@@ -45,7 +45,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Witify\\Laravel\\LaravelCartServiceProvider"
+                "Witify\\LaravelCart\\LaravelCartServiceProvider"
             ],
             "aliases": {
                 "Cart": "Witify\\LaravelCart\\Facades\\Cart"
