@@ -41,5 +41,15 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Witify\\Laravel\\LaravelCartServiceProvider"
+            ],
+            "aliases": {
+                "Cart": "Witify\\LaravelCart\\Facades\\Cart"
+            }
+        }
     }
 }
