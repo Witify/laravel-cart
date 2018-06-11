@@ -16,14 +16,10 @@ composer require witify/laravel-cart
 
 ## Usage
 
-Add it to your controller:
+For Laravel 5.1 to 5.4, add the service provider:
 ``` php
 
-use Witify\LaravelSeoAttributes\SeoTrait;
-
-class HomeController extends Controller {
-    use SeoTrait;
-}
+LaravelCartServiceProvider::class
 ```
 
 ### Testing
