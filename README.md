@@ -22,6 +22,22 @@ For Laravel 5.1 to 5.4, add the service provider:
 LaravelCartServiceProvider::class
 ```
 
+### Configuration
+To save cart into the database so you can retrieve it later, the package needs to know which database connection to use and what the name of the table is.
+By default the package will use the default database connection and use a table named `carts`.
+If you want to change these options, you'll have to publish the `config` file.
+
+    php artisan vendor:publish --provider="Witify\LaravelCart\LaravelCartServiceProvider" --tag="config"
+
+This will give you a `cart.php` config file in which you can make the changes.
+
+To make your life easy, the package also includes a ready to use `migration` which you can publish by running:
+
+    php artisan vendor:publish --provider="Witify\LaravelCart\LaravelCartServiceProvider" --tag="migrations"
+    
+This will place a `carts` table's migration file into `database/migrations` directory. Now all you have to do is run `php artisan migrate` to migrate your database
+
+
 ### Testing
 
 ``` bash
