@@ -2,8 +2,8 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/Witify/laravel-cart.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-cart)
 [![Build Status](https://img.shields.io/travis/Witify/laravel-cart/master.svg?style=flat-square)](https://travis-ci.org/witify/laravel-cart)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/maintainability)](https://codeclimate.com/github/Witify/laravel-cart/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/test_coverage)](https://codeclimate.com/github/Witify/laravel-cart/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/8ed724e9f57baa80c964/maintainability)](https://codeclimate.com/github/Witify/laravel-cart/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/8ed724e9f57baa80c964/test_coverage)](https://codeclimate.com/github/Witify/laravel-cart/test_coverage)
 [![Total Downloads](https://img.shields.io/packagist/dt/Witify/laravel-cart.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-cart)
 
 ## Installation
