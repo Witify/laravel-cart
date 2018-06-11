@@ -1,17 +1,17 @@
-# Quick JSON reponses in Laravel 
+# Lightweight and highly flexible cart in Laravel 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/Witify/laravel-seo-attributes.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-seo-attributes)
-[![Build Status](https://img.shields.io/travis/Witify/laravel-seo-attributes/master.svg?style=flat-square)](https://travis-ci.org/witify/laravel-seo-attributes)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/maintainability)](https://codeclimate.com/github/Witify/laravel-seo-attributes/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/test_coverage)](https://codeclimate.com/github/Witify/laravel-seo-attributes/test_coverage)
-[![Total Downloads](https://img.shields.io/packagist/dt/Witify/laravel-seo-attributes.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-seo-attributes)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/Witify/laravel-cart.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-cart)
+[![Build Status](https://img.shields.io/travis/Witify/laravel-cart/master.svg?style=flat-square)](https://travis-ci.org/witify/laravel-cart)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/maintainability)](https://codeclimate.com/github/Witify/laravel-cart/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4c8a395f8d76e65652c5/test_coverage)](https://codeclimate.com/github/Witify/laravel-cart/test_coverage)
+[![Total Downloads](https://img.shields.io/packagist/dt/Witify/laravel-cart.svg?style=flat-square)](https://packagist.org/packages/witify/laravel-cart)
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require witify/laravel-seo-attributes
+composer require witify/laravel-cart
 ```
 
 ## Usage
@@ -25,14 +25,6 @@ class HomeController extends Controller {
     use SeoTrait;
 }
 ```
-
-## Available methods
-
-| Method | Description |
-| --- | --- |
-| seo()->setTitle(string $title) | Adds seo.title value in the view |
-| seo()->setDescription(string $description) | Adds seo.description value in the view |
-| seo()->setRelCanonical(string $relCanonical) | Adds seo.rel_canonical value in the view |
 
 ### Testing
 

@@ -1,11 +1,11 @@
 {
-    "name": "witify/laravel-seo-attributes",
-    "description": "Quickly add SEO attribute to your views in Laravel",
+    "name": "witify/laravel-cart",
+    "description": "Highly flexible cart for Laravel",
     "keywords": [
         "laravel",
-        "SEO"
+        "cart"
     ],
-    "homepage": "https://github.com/Witify/laravel-seo-attributes",
+    "homepage": "https://github.com/Witify/laravel-cart",
     "license": "MIT",
     "authors": [
         {
@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Witify\\LaravelSeoAttributes\\": "src"
+            "Witify\\LaravelCart\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Witify\\LaravelSeoAttributesTests\\": "tests"
+            "Witify\\LaravelCart\\Tests\\": "tests"
         }
     },
     "scripts": {
