@@ -242,13 +242,13 @@ class CartTest extends TestCase
 
     public function test_updated_at_is_updated()
     {
-        Carbon::setTestNow('2018-01-01 10:00:00');
+        Carbon::setTestNow((new Carbon('2018-01-01 10:00:00'));
 
         $this->cart = new Cart(); // Reinstantiate reflect Carbon change in class
         $this->cart->add($this->buyable);
         $time1 = $this->cart->updatedAt;
 
-        Carbon::setTestNow('2018-01-01 12:00:00');
+        Carbon::setTestNow((new Carbon('2018-01-01 12:00:00'));
 
         $this->cart = new Cart(); // Reinstantiate reflect Carbon change in class
         $this->cart->add($this->buyable);
@@ -279,7 +279,7 @@ class CartTest extends TestCase
 
         // Guest - add one product
 
-        Carbon::setTestNow('2018-01-01 10:00:00');
+        Carbon::setTestNow((new Carbon('2018-01-01 10:00:00'));
         $this->cart = new Cart();
         $this->cart->add($this->buyable);
         
@@ -290,7 +290,7 @@ class CartTest extends TestCase
 
         $this->actingAs($this->user);
         event(new Login($this->user, false)); // Forcing event fire
-        Carbon::setTestNow('2018-01-01 11:00:00');
+        Carbon::setTestNow((new Carbon('2018-01-01 11:00:00'));
         $this->cart = new Cart();
         $this->cart->add(new BuyableProduct(3));
         
@@ -301,7 +301,7 @@ class CartTest extends TestCase
         // Guest
 
         Auth::logout();
-        Carbon::setTestNow('2018-01-01 13:00:00');
+        Carbon::setTestNow(new Carbon('2018-01-01 13:00:00'));
         $this->cart = new Cart();
         $this->assertEquals($this->cart->count(), 1);
 
