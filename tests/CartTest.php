@@ -160,6 +160,28 @@ class CartTest extends TestCase
         $this->assertEquals($this->cart->items()->first()->options['size'], $newOptions['size']);
     }
 
+    public function test_any()
+    {
+        $this->createComplexCart();
+        $this->assertTrue($this->cart->any());
+    }
+
+    public function test_is_empty()
+    {
+        $this->cart = new Cart();
+        $this->assertTrue($this->cart->isEmpty());
+    }
+
+    public function test_empty()
+    {
+        $this->createComplexCart();
+        $this->assertTrue($this->cart->any());
+        $this->cart->empty();
+        $this->assertFalse($this->cart->any());
+        $this->assertEquals($this->cart->count(), 0);
+        $this->assertEquals($this->cart->total(), 0);
+    }
+
     public function test_can_add_cart_line()
     {
         $cartItem = $this->cart->add($this->buyable);

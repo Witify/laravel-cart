@@ -70,6 +70,21 @@ class Cart implements Arrayable, Jsonable
         });
     }
 
+    public function any() : bool
+    {
+        return $this->count() > 0;
+    }
+
+    public function isEmpty() : bool
+    {
+        return $this->count() == 0;
+    }
+
+    public function empty()
+    {
+        $this->items = collect();
+    }
+
     public function subtotal() : float
     {
         return $this->items->sum(function($item) {
