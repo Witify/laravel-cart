@@ -31,4 +31,20 @@ return [
 
     'update_on_login' => true,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cart lines
+    |--------------------------------------------------------------------------
+    |
+    | When this option is set to 'true' the cart will automatically
+    | update the session cart from the cart on the database
+    |
+    */
+
+    'lines' => [
+        'taxes' => function($total, $subtotal, $items) {
+            return $subtotal * 0.15;
+        }
+    ]
+
 ];

@@ -29,6 +29,8 @@ class Cart implements Arrayable, Jsonable
         $this->items = collect();
         $this->cartLines = collect();
 
+        $this->addCartLines();
+
         $this->retrieveCart();
     }
 
@@ -102,7 +104,14 @@ class Cart implements Arrayable, Jsonable
         return $this->items;
     }
 
-    public function addCartLine(string $lineName, Closure $callback)
+    private function addCartLines()
+    {
+        foreach(config('cart.lines') as $key => $callback) {
+            $this->addCartLine($key, $callback);
+        }
+    }
+
+    private function addCartLine(string $lineName, Closure $callback)
     {
         $this->cartLines->put($lineName, $callback);
     }
