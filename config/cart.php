@@ -25,7 +25,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | When this option is set to 'true' the cart will automatically
-    | update the session cart from the cart on the database
+    | update the session cart from the cart on the database.
     |
     */
 
@@ -36,8 +36,8 @@ return [
     | Cart lines
     |--------------------------------------------------------------------------
     |
-    | When this option is set to 'true' the cart will automatically
-    | update the session cart from the cart on the database
+    | All cart lines calculated after the subtotal. Here you may add taxes or 
+    | any additionnal fees depending on your needs.
     |
     */
 
