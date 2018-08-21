@@ -272,6 +272,18 @@ class CartTest extends TestCase
         $this->assertEquals(DB::table('carts')->first()->content, $this->cart->toJson());
     }
 
+    public function test_first_login()
+    {
+        $this->loadLaravelMigrations(['--database' => 'testing']);
+        $this->artisan('migrate', ['--database' => 'testing']);
+
+        
+        $this->actingAs($this->user);
+        Carbon::setTestNow(new Carbon('2018-01-01 11:00:00'));
+        event(new Login($this->user, false)); // Forcing event fire
+        $this->assertEquals($this->cart->count(), 0);
+    }
+
     public function test_login_vs_logout()
     {
         $this->loadLaravelMigrations(['--database' => 'testing']);

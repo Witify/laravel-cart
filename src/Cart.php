@@ -243,7 +243,7 @@ class Cart implements Arrayable, Jsonable
      */
     private function defaultCart()
     {
-        $this->updatedAt = new Carbon('1970-01-01 00:00:00');
+        $this->updatedAt = Carbon::now();
         return $this->toArray();
     }
 
