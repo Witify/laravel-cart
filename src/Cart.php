@@ -36,6 +36,23 @@ class Cart implements Arrayable, Jsonable
         $this->retrieveCart();
     }
 
+    /**
+     * Setup Cart class
+     *
+     * @param array $cartData
+     * @return void
+     */
+    private function setUp(array $cartData)
+    {
+        $this->items = collect($cartData['items'])->map(function($item) {
+            return CartItem::fromArray($item);
+        });
+
+        $this->metaData = collect($cartData['metadata']);
+
+        $this->updatedAt = new Carbon($cartData['updated_at']);
+    }
+
     public function add(Buyable $buyable, int $quantity = 1, array $options = []) : CartItem
     {
         $cartItem = $this->createCartItem($buyable, $quantity, $options);
@@ -76,7 +93,15 @@ class Cart implements Arrayable, Jsonable
 
     public function getMetaData(string $key)
     {
-        return $this->metaData[$key];
+        if ($this->hasMetaData($key)) {
+            return $this->metaData[$key];
+        }
+        return null;
+    }
+
+    public function hasMetaData(string $key)
+    {
+        return $this->metaData->has($key);
     }
 
     public function count() : int
@@ -212,21 +237,6 @@ class Cart implements Arrayable, Jsonable
     }
 
     /**
-     * Setup Cart class
-     *
-     * @param array $cartData
-     * @return void
-     */
-    private function setUp(array $cartData)
-    {
-        $this->items = collect($cartData['items'])->map(function($item) {
-            return CartItem::fromArray($item);
-        });
-
-        $this->updatedAt = new Carbon($cartData['updated_at']);
-    }
-
-    /**
      * Retrieves the cart from session
      *
      * @return void
@@ -300,7 +310,7 @@ class Cart implements Arrayable, Jsonable
         return [
             'items' => $this->items->toArray(),
             'lines' => $this->getCartLines()->toArray(),
-            'meta_data' => $this->metaData->toArray(),
+            'metadata' => $this->metaData->toArray(),
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s')
         ];
     }
