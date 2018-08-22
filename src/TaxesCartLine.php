@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 
 class TaxesCartLine implements Contracts\CartLineHandler
 {
-    static public function handle(Cart $cart) : float
+    static public function handle(Cart $cart, float $currentTotal) : float
     {
-        return $cart->subtotal() * 0.15;
+        return $currentTotal * 0.15;
     }
 }

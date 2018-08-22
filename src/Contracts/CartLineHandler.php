@@ -12,5 +12,5 @@ interface CartLineHandler
      *
      * @return float
      */
-    static public function handle(Cart $cart) : float;
+    static public function handle(Cart $cart, float $currentTotal) : float;
 }

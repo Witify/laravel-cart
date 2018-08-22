@@ -134,7 +134,7 @@ class Cart implements Arrayable, Jsonable
         $subtotal = $this->subtotal();
         $total = $subtotal;
         foreach($this->cartLines as $key => $class) {
-            $priceLines[$key] = call_user_func($class .'::handle', $this);
+            $priceLines[$key] = call_user_func($class .'::handle', $this, $total);
             $total += $priceLines[$key];
         }
         $priceLines['total'] = $total;
