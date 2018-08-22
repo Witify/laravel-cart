@@ -21,6 +21,7 @@ class Cart implements Arrayable, Jsonable
     
     public $updatedAt;
     public $items;
+    public $metaData;
 
     private $cartLines;
 
@@ -28,6 +29,7 @@ class Cart implements Arrayable, Jsonable
     {
         $this->items = collect();
         $this->cartLines = collect();
+        $this->metaData = collect();
 
         $this->addCartLines();
 
@@ -63,6 +65,16 @@ class Cart implements Arrayable, Jsonable
         $this->remove($rowId);
 
         return $this->add($buyable, $quantity, $options);
+    }
+
+    public function setMetaData(string $key, $data)
+    {
+        $this->metaData[$key] = $data;
+    }
+
+    public function getMetaData(string $key)
+    {
+        return $this->metaData[$key];
     }
 
     public function count() : int
@@ -106,14 +118,14 @@ class Cart implements Arrayable, Jsonable
 
     private function addCartLines()
     {
-        foreach(config('cart.lines') as $key => $callback) {
-            $this->addCartLine($key, $callback);
+        foreach(config('cart.lines') as $key => $class) {
+            $this->addCartLine($key, $class);
         }
     }
 
-    private function addCartLine(string $lineName, Closure $callback)
+    private function addCartLine(string $lineName, string $class)
     {
-        $this->cartLines->put($lineName, $callback);
+        $this->cartLines->put($lineName, $class);
     }
 
     public function getCartLines()
@@ -121,8 +133,8 @@ class Cart implements Arrayable, Jsonable
         $priceLines = collect();
         $subtotal = $this->subtotal();
         $total = $subtotal;
-        foreach($this->cartLines as $key => $callback) {
-            $priceLines[$key] = $callback($total, $subtotal, $this->items);
+        foreach($this->cartLines as $key => $class) {
+            $priceLines[$key] = call_user_func($class .'::handle', $this);
             $total += $priceLines[$key];
         }
         $priceLines['total'] = $total;
@@ -286,6 +298,7 @@ class Cart implements Arrayable, Jsonable
         return [
             'items' => $this->items->toArray(),
             'lines' => $this->getCartLines()->toArray(),
+            'meta_data' => $this->metaData->toArray(),
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s')
         ];
     }

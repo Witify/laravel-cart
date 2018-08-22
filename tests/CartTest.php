@@ -15,6 +15,7 @@ use Witify\LaravelCart\Tests\Fixtures\User;
 use Witify\LaravelCart\LaravelCartServiceProvider;
 use Witify\LaravelCart\Tests\Fixtures\BuyableProduct;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Artisan;
 
 class CartTest extends TestCase
 {
@@ -180,43 +181,6 @@ class CartTest extends TestCase
         $this->assertEquals($this->cart->total(), $this->cart->items()->first()->total() * 1.15);
     }
 
-    /*public function test_can_add_multiple_cart_lines()
-    {
-        $cartItem = $this->cart->add($this->buyable);
-        $cartItem = $this->cart->add($this->buyable);
-
-        $tax1 = 0.25;
-        $this->cart->addCartLine('taxes 1', function($total) use ($tax1) {
-            return $total * $tax1;
-        });
-
-        $tax2 = 0.71;
-        $this->cart->addCartLine('taxes 2', function($total, $subtotal) use ($tax2) {
-            return $subtotal * $tax2;
-        });
-
-        $fee = 3;
-        $this->cart->addCartLine('fee', function($total) use ($fee) {
-            return $fee;
-        });
-
-        $shipping = 10;
-        $this->cart->addCartLine('shipping', function($total) use ($shipping) {
-            return $shipping;
-        });
-
-        $finalTax = 0.11;
-        $this->cart->addCartLine('final taxes', function($total) use ($finalTax) {
-            return $total * $finalTax;
-        });
-
-        $itemSubTotal = $this->cart->items()->first()->total();
-
-        $total = round(($itemSubTotal + $itemSubTotal * $tax1 + $itemSubTotal * $tax2 + $fee + $shipping) * (1 + $finalTax), 2);
-
-        $this->assertEquals($this->cart->total(), $total);
-    }*/
-
     public function test_can_save_to_session()
     {
         $this->createComplexCart();
@@ -329,5 +293,20 @@ class CartTest extends TestCase
         event(new Login($this->user, false)); // Forcing event fire
 
         $this->assertEquals(count(json_decode(DB::table('carts')->first()->content, true)['items']), 4);
+    }
+
+    public function test_set_metadata()
+    {
+        $shipping = 'fedex';
+        $promoCodes = [
+            'summer2018',
+            'hype2018'
+        ];
+
+        $this->cart->setMetaData('shipping_carrier', $shipping);
+        $this->cart->setMetaData('promo_codes', $promoCodes);
+
+        $this->assertEquals($this->cart->getMetaData('shipping_carrier'), $shipping);
+        $this->assertEquals($this->cart->getMetaData('promo_codes'), $promoCodes);
     }
 }

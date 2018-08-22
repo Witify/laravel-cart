@@ -42,9 +42,7 @@ return [
     */
 
     'lines' => [
-        'taxes' => function($total, $subtotal, $items) {
-            return $subtotal * 0.15;
-        }
+        'taxes' => 'Witify\LaravelCart\TaxesCartLine'
     ]
 
 ];
