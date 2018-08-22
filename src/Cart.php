@@ -70,6 +70,8 @@ class Cart implements Arrayable, Jsonable
     public function setMetaData(string $key, $data)
     {
         $this->metaData[$key] = $data;
+
+        $this->save();
     }
 
     public function getMetaData(string $key)
