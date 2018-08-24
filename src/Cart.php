@@ -21,6 +21,7 @@ class Cart implements Arrayable, Jsonable
     
     public $updatedAt;
     public $items;
+    public $metaData;
 
     private $cartLines;
 
@@ -28,10 +29,28 @@ class Cart implements Arrayable, Jsonable
     {
         $this->items = collect();
         $this->cartLines = collect();
+        $this->metaData = collect();
 
         $this->addCartLines();
 
         $this->retrieveCart();
+    }
+
+    /**
+     * Setup Cart class
+     *
+     * @param array $cartData
+     * @return void
+     */
+    private function setUp(array $cartData)
+    {
+        $this->items = collect($cartData['items'])->map(function($item) {
+            return CartItem::fromArray($item);
+        });
+
+        $this->metaData = collect($cartData['metadata']);
+
+        $this->updatedAt = new Carbon($cartData['updated_at']);
     }
 
     public function add(Buyable $buyable, int $quantity = 1, array $options = []) : CartItem
@@ -63,6 +82,26 @@ class Cart implements Arrayable, Jsonable
         $this->remove($rowId);
 
         return $this->add($buyable, $quantity, $options);
+    }
+
+    public function setMetaData(string $key, $data)
+    {
+        $this->metaData[$key] = $data;
+
+        $this->save();
+    }
+
+    public function getMetaData(string $key)
+    {
+        if ($this->hasMetaData($key)) {
+            return $this->metaData[$key];
+        }
+        return null;
+    }
+
+    public function hasMetaData(string $key)
+    {
+        return $this->metaData->has($key);
     }
 
     public function count() : int
@@ -120,14 +159,14 @@ class Cart implements Arrayable, Jsonable
 
     private function addCartLines()
     {
-        foreach(config('cart.lines') as $key => $callback) {
-            $this->addCartLine($key, $callback);
+        foreach(config('cart.lines') as $key => $class) {
+            $this->addCartLine($key, $class);
         }
     }
 
-    private function addCartLine(string $lineName, Closure $callback)
+    private function addCartLine(string $lineName, string $class)
     {
-        $this->cartLines->put($lineName, $callback);
+        $this->cartLines->put($lineName, $class);
     }
 
     public function getCartLines()
@@ -135,8 +174,8 @@ class Cart implements Arrayable, Jsonable
         $priceLines = collect();
         $subtotal = $this->subtotal();
         $total = $subtotal;
-        foreach($this->cartLines as $key => $callback) {
-            $priceLines[$key] = $callback($total, $subtotal, $this->items);
+        foreach($this->cartLines as $key => $class) {
+            $priceLines[$key] = call_user_func($class .'::handle', $this, $total);
             $total += $priceLines[$key];
         }
         $priceLines['total'] = $total;
@@ -212,21 +251,6 @@ class Cart implements Arrayable, Jsonable
     }
 
     /**
-     * Setup Cart class
-     *
-     * @param array $cartData
-     * @return void
-     */
-    private function setUp(array $cartData)
-    {
-        $this->items = collect($cartData['items'])->map(function($item) {
-            return CartItem::fromArray($item);
-        });
-
-        $this->updatedAt = new Carbon($cartData['updated_at']);
-    }
-
-    /**
      * Retrieves the cart from session
      *
      * @return void
@@ -257,7 +281,7 @@ class Cart implements Arrayable, Jsonable
      */
     private function defaultCart()
     {
-        $this->updatedAt = new Carbon('1970-01-01 00:00:00');
+        $this->updatedAt = Carbon::now();
         return $this->toArray();
     }
 
@@ -300,6 +324,7 @@ class Cart implements Arrayable, Jsonable
         return [
             'items' => $this->items->toArray(),
             'lines' => $this->getCartLines()->toArray(),
+            'metadata' => $this->metaData->toArray(),
             'updated_at' => $this->updatedAt->format('Y-m-d H:i:s')
         ];
     }
