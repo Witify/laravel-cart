@@ -72,6 +72,20 @@ class Cart implements Arrayable, Jsonable
         });
     }
 
+    public function get(string $rowId)
+    {
+        if ($this->has($rowId)) {
+            return $this->items[$rowId];
+        }
+
+        return null;
+    }
+
+    public function has(string $rowId)
+    {
+        return $this->items->has($rowId);
+    }
+
     public function any() : bool
     {
         return $this->count() > 0;

@@ -158,6 +158,20 @@ class CartTest extends TestCase
         $this->assertTrue($this->cart->any());
     }
 
+    public function test_has()
+    {
+        $this->createComplexCart();
+        $this->assertFalse($this->cart->has('123'));
+        $this->assertTrue($this->cart->has($this->cart->items()->first()->rowId));
+    }
+
+    public function test_get()
+    {
+        $this->createComplexCart();
+        $this->assertNull($this->cart->get('123'));
+        $this->assertEquals($this->cart->items()->first(), $this->cart->get($this->cart->items()->first()->rowId));
+    }
+
     public function test_is_empty()
     {
         $this->cart = new Cart();
